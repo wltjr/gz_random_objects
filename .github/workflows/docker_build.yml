@@ -1,0 +1,28 @@
+name: CI
+on:
+    push:
+        branches: [ master ]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Check out repository
+            uses: actions/checkout@v4
+          - name: Run the build process inside Docker container ROS 2 Iron
+            uses: addnab/docker-run-action@v3
+            with:
+                image: ospreyrobotics/docker-ros2-iron-gz-rviz2:latest
+                options: -v ${{ github.workspace }}:/opt/ros_ws/src/gz_random_objects
+                run: |
+                    . /opt/ros/iron/setup.sh
+                    cd /opt/ros_ws/
+                    colcon build --symlink-install --packages-select  gz_random_objects
+          - name: Run the build process inside Docker container ROS 2 Jazzy
+            uses: addnab/docker-run-action@v3
+            with:
+                image: wltjr/docker-ros2-jazzy-gz-rviz2-turbopi:latest
+                options: -v ${{ github.workspace }}:/opt/ros_ws/src/gz_random_objects
+                run: |
+                    . /opt/ros/jazzy/setup.sh
+                    cd /opt/ros_ws/
+                    colcon build --symlink-install --packages-select  gz_random_objects
