@@ -38,11 +38,6 @@ class gz::sim::systems::GzRandomObjectsPrivate
         std::vector<std::string> meshURIs;
 };
 
-GzRandomObjects::GzRandomObjects()
-  : dataPtr(std::make_unique<GzRandomObjectsPrivate>())
-{
-}
-
 void GzRandomObjects::Configure(const Entity &/*_entity*/,
                                 const std::shared_ptr<const sdf::Element> &_sdf,
                                 EntityComponentManager &_ecm,
