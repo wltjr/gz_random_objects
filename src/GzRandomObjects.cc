@@ -4,6 +4,7 @@
  *  you may not use this file except in compliance with the License.
  */
 
+#include <random>
 #include <vector>
 
 #include <gz/sim/Model.hh>
@@ -28,11 +29,9 @@ class gz::sim::systems::GzRandomObjectsPrivate
         long parent{0};
         double x_min{0};
         double x_max{0};
-        long x_range{0};
         double x_scale{0};
         double y_min{0};
         double y_max{0};
-        long y_range{0};
         double y_scale{0};
         double z_scale{0};
         int objects{0};
@@ -68,8 +67,6 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
                                              this->dataPtr->x_min).first;
     this->dataPtr->x_max = _sdf->Get<double>("x_max",
                                              this->dataPtr->x_max).first;
-    // set x range
-    this->dataPtr->x_range = this->dataPtr->x_max - this->dataPtr->x_min;
     this->dataPtr->x_scale = _sdf->Get<double>("x_scale",
                                                this->dataPtr->x_scale).first;
 
@@ -78,8 +75,6 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
                                              this->dataPtr->y_min).first;
     this->dataPtr->y_max = _sdf->Get<double>("y_max",
                                              this->dataPtr->y_max).first;
-    // set y range
-    this->dataPtr->y_range = this->dataPtr->y_max - this->dataPtr->y_min;
     this->dataPtr->y_scale = _sdf->Get<double>("y_scale",
                                                this->dataPtr->y_scale).first;
                          
@@ -88,7 +83,8 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
                                                this->dataPtr->z_scale).first;
 
     SdfEntityCreator sec = SdfEntityCreator(_ecm, _eventManager);
-    srand(time(0));
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
     for( int i = 1 ; i <= this->dataPtr->objects; i++ )
     {
@@ -98,8 +94,12 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
         std::stringstream ss;
         std::stringstream mesh;
 
-        float x = ((rand() % this->dataPtr->x_range) + this->dataPtr->x_min) / 1000.0;
-        float y = ((rand() % this->dataPtr->y_range) + this->dataPtr->y_min) / 1000.0;
+        std::uniform_real_distribution<float> x_dist(this->dataPtr->x_min,
+                                                     this->dataPtr->x_max);
+        std::uniform_real_distribution<float> y_dist(this->dataPtr->y_min,
+                                                     this->dataPtr->y_max);
+        float x = x_dist(gen) / 1000.0;
+        float y = y_dist(gen) / 1000.0;
 
         mesh << "\
                 <geometry>\
