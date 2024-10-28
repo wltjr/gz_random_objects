@@ -69,7 +69,8 @@ namespace ignition
                                        EventManager &_eventMgr) override;
 
                     private:
-                        std::unique_ptr<GzRandomObjectsPrivate> dataPtr;
+                        std::unique_ptr<GzRandomObjectsPrivate> dataPtr = 
+                            std::make_unique<GzRandomObjectsPrivate>();
                 };
             }
         }
