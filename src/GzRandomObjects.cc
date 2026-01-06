@@ -81,7 +81,9 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    for( int i = 1 ; i <= this->dataPtr->objects; i++ )
+    int meshes = this->dataPtr->meshURIs.size() - 1;
+
+    for( int i = 1, m = 0 ; i <= this->dataPtr->objects; i++, m++ )
     {
         Entity objEntity;
         sdf::Model objModel;
@@ -96,10 +98,13 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
         float x = x_dist(gen) / 1000.0;
         float y = y_dist(gen) / 1000.0;
 
-        mesh << "\
+        if(m > meshes)
+            m = 0;
+
+        mesh << "\n
                 <geometry>\
                     <mesh>\
-                        <uri>" << this->dataPtr->meshURIs[i-1] << "</uri>\
+                        <uri>" << this->dataPtr->meshURIs[m] << "</uri>\
                         <scale>" << this->dataPtr->x_scale << " " << this->dataPtr->y_scale << " " << this->dataPtr->z_scale << "</scale>\
                     </mesh>\
                 </geometry>";
