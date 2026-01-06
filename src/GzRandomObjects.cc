@@ -101,33 +101,33 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
         if(m > meshes)
             m = 0;
 
-        mesh << "\n
-                <geometry>\
-                    <mesh>\
-                        <uri>" << this->dataPtr->meshURIs[m] << "</uri>\
-                        <scale>" << this->dataPtr->x_scale << " " << this->dataPtr->y_scale << " " << this->dataPtr->z_scale << "</scale>\
-                    </mesh>\
-                </geometry>";
+        mesh << "\n"
+                "<geometry>\n"
+                "    <mesh>\n"
+                "        <uri>" << this->dataPtr->meshURIs[m] << "</uri>\n"
+                "        <scale>" << this->dataPtr->x_scale << " " << this->dataPtr->y_scale << " " << this->dataPtr->z_scale << "</scale>\n"
+                "    </mesh>\n"
+                "</geometry>";
 
-        ss << "<?xml version='1.0'?>\
-            <sdf version='1.7'>\
-            <model name='obj" << i << "'>\
-                <pose>" << std::setw(5) << x << " " << std::setw(5) << y << " 0 0 0 0</pose>\
-                <link name='obj" << i << "'>\
-                <collision name='obj" << i << "_collision'>\
-                    " << mesh.str() << "\
-                </collision>\
-                <visual name='obj" << i << "_visual'>\
-                    <pose>0 0 0 0 0 0</pose>\
-                    " << mesh.str() << "\
-                    <meta>\
-                    <layer>0</layer>\
-                    </meta>\
-                </visual>\
-                </link>\
-                <static>1</static>\
-            </model>\
-            </sdf>";
+        ss << "<?xml version='1.0'?>\n"
+            "<sdf version='1.7'>\n"
+            "<model name='obj" << i << "'>\n"
+            "    <pose>" << std::setw(5) << x << " " << std::setw(5) << y << " 0 0 0 0</pose>\n"
+            "    <link name='obj" << i << "'>\n"
+            "    <collision name='obj" << i << "_collision'>\n"
+            "        " << mesh.str() << "\n"
+            "    </collision>\n"
+            "    <visual name='obj" << i << "_visual'>\n"
+            "        <pose>0 0 0 0 0 0</pose>\n"
+            "        " << mesh.str() << "\n"
+            "        <meta>\n"
+            "        <layer>0</layer>\n"
+            "        </meta>\n"
+            "    </visual>\n"
+            "    </link>\n"
+            "    <static>1</static>\n"
+            "</model>\n"
+            "</sdf>";
 
         objSDF.SetFromString(ss.str());
         objModel.Load(objSDF.Root()->GetElement("model"));
