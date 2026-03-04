@@ -10,21 +10,12 @@
 
 #include <gz/sim/System.hh>
 
-#ifdef USE_GZ8
 namespace gz
 {
     namespace sim
     {
         // Inline bracket to help doxygen filtering.
         inline namespace GZ_SIM_VERSION_NAMESPACE
-#else
-namespace ignition
-{
-    namespace gazebo
-    {
-        // Inline bracket to help doxygen filtering.
-        namespace v6
-#endif
         {
             namespace systems
             {
