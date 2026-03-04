@@ -136,7 +136,6 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
     }
 }
 
-#ifdef USE_GZ8
 // Register plugin
 GZ_ADD_PLUGIN(GzRandomObjects,
               gz::sim::System,
@@ -144,12 +143,3 @@ GZ_ADD_PLUGIN(GzRandomObjects,
 
 // Add plugin alias so that we can refer to the plugin without the version namespace
 GZ_ADD_PLUGIN_ALIAS(GzRandomObjects, "gz::sim::systems::GzRandomObjects")
-#else
-// Register plugin
-IGNITION_ADD_PLUGIN(GzRandomObjects,
-                    gz::sim::System,
-                    GzRandomObjects::ISystemConfigure)
-
-// Add plugin alias so that we can refer to the plugin without the version namespace
-IGNITION_ADD_PLUGIN_ALIAS(GzRandomObjects, "gz::sim::systems::GzRandomObjects")
-#endif
