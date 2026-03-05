@@ -36,7 +36,7 @@ namespace gz
                          * @brief Construct a new GzRandomObjects object, empty
                          *        just initializes a private class
                          */
-                        GzRandomObjects();
+                        GzRandomObjects() = default;
 
                         /**
                          * @brief Destroy the GzRandomObjects object, empty/unused
