@@ -9,6 +9,18 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <build_depend>gz-cmake-vendor</build_depend>
+  <build_depend>gz-common5</build_depend>
+  <build_depend>gz-gui-vendor</build_depend>
+  <build_depend>gz-math-vendor</build_depend>
+  <build_depend>gz-msgs-vendor</build_depend>
+  <build_depend>gz-physics-vendor</build_depend>
+  <build_depend>gz-plugin-vendor</build_depend>
+  <build_depend>gz-transport-vendor</build_depend>
+  <build_depend>gz-utils-vendor</build_depend>
+  <build_depend>ros-gz-sim</build_depend>
+  <build_depend>sdformat-vendor</build_depend>
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
