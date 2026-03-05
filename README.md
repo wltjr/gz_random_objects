@@ -1,4 +1,5 @@
 # GZ Random Objects
+
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=plastic)](https://github.com/wltjr/gz_random_objects/blob/master/LICENSE.txt)
 ![Build Status](https://github.com/wltjr/gz_random_objects/actions/workflows/docker_build.yml/badge.svg)
 [![Code Quality](https://sonarcloud.io/api/project_badges/measure?project=wltjr_gz_random_objects&metric=alert_status)](https://sonarcloud.io/dashboard?id=wltjr_gz_random_objects)
@@ -7,32 +8,38 @@ Gazebo Random Objects is a plugin for Gazebo that will randomly place objects
 in mesh files on a 2D plane.
 
 ## Download
+
 Download and unpack or clone this repositories contents into your ros2
 workspace; ex `~/ros2_ws/src/gz_random_objects`.
 
-
 ## Build
+
 The plugin is built using the standard ROS 2 build process. Building is done
 using colcon which will invoke cmake and run the necessary commands. Run the
 following command in your ros2 workspace; ex `~/ros2_ws/`.
+
 ```bash
 colcon build --symlink-install --packages-select  gz_random_objects
 ```
 
 ### Source install
+
 Make sure to run the following command after install and login. Run the
 following command in your ros2 workspace; ex `~/ros2_ws/`.
+
 ```bash
 source install/setup.bash
 ```
 
 You may want to have your development user environment do this on login via
 `~/.bashrc` file; add the following to the end of that file.
+
 ```bash
 source ~/ros2_ws/install/setup.bash
 ```
 
 ## Plugin Usage
+
 In order to use the plugin, it needs to be added to a SDF world, or model to be
 included in some SDF world, or part of a URDF.
 
