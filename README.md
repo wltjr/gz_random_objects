@@ -41,14 +41,20 @@ source ~/ros2_ws/install/setup.bash
 ## Plugin Usage
 
 In order to use the plugin, it needs to be added to a SDF world, or model to be
-included in some SDF world, or part of a URDF.
+included in some SDF world, or part of a URDF. This plugin can be included and
+used more than once to support different types of objects. The number of objects
+can exceed the number of mesh files, but does require one mesh at minimum. Of
+course, you can always have more files than objects, of which, a random subset
+will be used based on the quantity of objects and files.
 
 ```xml
 <plugin filename="libgz_random_objects.so" name="gz::sim::systems::GzRandomObjects">
     <!-- Parent ID in SDF -->
     <parent>4</parent>
+    <!-- Name prefix,  -->
+    <prefix>rock</prefix>
     <!--Number of Objects, same number as mesh files at this time -->
-    <objects>7</objects>
+    <objects>14</objects>
     <!-- x/y min and max, difference becomes range, along with scale -->
     <x_min>-750</x_min>
     <x_max>750</x_max>
