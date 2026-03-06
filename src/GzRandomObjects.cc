@@ -35,6 +35,7 @@ class gz::sim::systems::GzRandomObjectsPrivate
         double y_scale{0};
         double z_scale{0};
         int objects{0};
+        std::string prefix;
         std::vector<std::string> meshURIs;
 };
 
@@ -56,6 +57,9 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
 
     this->dataPtr->parent = _sdf->Get<int>("parent",
                                            this->dataPtr->parent).first;
+
+    this->dataPtr->prefix = _sdf->Get<std::string>("prefix",
+                                                   this->dataPtr->prefix).first;
 
     // x values
     this->dataPtr->x_min = _sdf->Get<double>("x_min",
@@ -111,7 +115,7 @@ void GzRandomObjects::Configure(const Entity &/*_entity*/,
 
         ss << "<?xml version='1.0'?>\n"
             "<sdf version='1.7'>\n"
-            "<model name='obj" << i << "'>\n"
+            "<model name='" << this->dataPtr->prefix << i << "'>\n"
             "    <pose>" << std::setw(5) << x << " " << std::setw(5) << y << " 0 0 0 0</pose>\n"
             "    <link name='obj" << i << "'>\n"
             "    <collision name='obj" << i << "_collision'>\n"
