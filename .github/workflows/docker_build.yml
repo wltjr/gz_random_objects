@@ -17,3 +17,12 @@ jobs:
                     . /opt/ros/jazzy/setup.sh
                     cd /opt/ros_ws/
                     colcon build --symlink-install --packages-select  gz_random_objects
+          - name: Run the build process inside Docker container ROS 2 Lyrical
+            uses: addnab/docker-run-action@v3
+            with:
+                image: wltjr/docker-ros2-lyrical-gz-rviz2-turbopi:latest
+                options: -v ${{ github.workspace }}:/opt/ros_ws/src/gz_random_objects
+                run: |
+                    . /opt/ros/lyrical/setup.sh
+                    cd /opt/ros_ws/
+                    colcon build --symlink-install --packages-select  gz_random_objects
