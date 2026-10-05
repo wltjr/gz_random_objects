@@ -17,9 +17,11 @@ endif()
 ################################################################################
 # gazebo harmonic
 find_package(gz-sim8 QUIET)
+# gazebo jetty
+find_package(gz-sim QUIET)
 
-if(NOT gz-sim8_FOUND)
-    message(SEND_ERROR "Gazeboo 8 Harmonic was not found!")
+if(NOT gz-sim8_FOUND AND NOT gz-sim_FOUND)
+    message(SEND_ERROR "Gazeboo 8 Harmonic or 10 Jetty was not found!")
     return()
 endif()
 
@@ -44,13 +46,25 @@ if( gz-sim8_FOUND )
     )
 endif()
 
+if( gz-sim_FOUND )
+    set(INCLUDE_DEPENDS
+        ${INCLUDE_DEPENDS}
+        gz-cmake
+        gz-common
+        gz-gui
+        gz-math
+        gz-msgs
+        gz-physics
+        gz-plugin
+        gz-transport
+        gz-utils
+        sdformat
+    )
+endif()
+
 foreach(Dependency IN ITEMS ${INCLUDE_DEPENDS})
     find_package(${Dependency} REQUIRED)
 endforeach()
-
-if( gz-sim8_FOUND )
-    pkg_search_module(gz-cmake3 REQUIRED gz-cmake3)
-endif()
 
 ################################################################################
 # Build
@@ -62,32 +76,30 @@ endif()
 
 include_directories(src)
 
-if( gz-sim8_FOUND )
-    include_directories(
-        ${GZ-CMAKE_DIR}
-        ${GZ-COMMON_INCLUDE_DIRS}
-        ${GZ-SIM_INCLUDE_DIRS}
-        ${GZ-MATH_INCLUDE_DIRS}
-        ${GZ-MSGS_INCLUDE_DIRS}
-        ${GZ-PHYSICS_INCLUDE_DIRS}
-        ${GZ-PLUGIN_INCLUDE_DIRS}
-        ${GZ-TRANSPORT_INCLUDE_DIRS}
-        ${GZ-UTILS_INCLUDE_DIRS}
-        ${SDFormat_INCLUDE_DIRS}
-    )
+include_directories(
+    ${GZ-CMAKE_DIR}
+    ${GZ-COMMON_INCLUDE_DIRS}
+    ${GZ-SIM_INCLUDE_DIRS}
+    ${GZ-MATH_INCLUDE_DIRS}
+    ${GZ-MSGS_INCLUDE_DIRS}
+    ${GZ-PHYSICS_INCLUDE_DIRS}
+    ${GZ-PLUGIN_INCLUDE_DIRS}
+    ${GZ-TRANSPORT_INCLUDE_DIRS}
+    ${GZ-UTILS_INCLUDE_DIRS}
+    ${SDFormat_INCLUDE_DIRS}
+)
 
-    link_directories(${GZ-CMAKE_LIBRARY_DIRS}
-        ${GZ-COMMON_LIBRARY_DIRS}
-        ${GZ-SIM_LIBRARY_DIRS}
-        ${GZ-MATH_LIBRARY_DIRS}
-        ${GZ-MSGS_LIBRARY_DIRS}
-        ${GZ-PLUGIN_LIBRARY_DIRS}
-        ${GZ-PHYSICS_LIBRARY_DIRS}
-        ${GZ-TRANSPORT_LIBRARY_DIRS}
-        ${GZ-UTILS_LIBRARY_DIRS}
-        ${SDFormat_LIBRARY_DIRS}
-    )
-endif()
+link_directories(${GZ-CMAKE_LIBRARY_DIRS}
+    ${GZ-COMMON_LIBRARY_DIRS}
+    ${GZ-SIM_LIBRARY_DIRS}
+    ${GZ-MATH_LIBRARY_DIRS}
+    ${GZ-MSGS_LIBRARY_DIRS}
+    ${GZ-PLUGIN_LIBRARY_DIRS}
+    ${GZ-PHYSICS_LIBRARY_DIRS}
+    ${GZ-TRANSPORT_LIBRARY_DIRS}
+    ${GZ-UTILS_LIBRARY_DIRS}
+    ${SDFormat_LIBRARY_DIRS}
+)
 
 # shared object libraries, lib*.so
 add_library(gz_random_objects SHARED src/GzRandomObjects.cc)
